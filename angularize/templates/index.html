@@ -1,29 +1,75 @@
-
+{% verbatim %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="angularizeApp">
   <head>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <title>Real-time Charting App</title>
+
     <!-- Le styles -->
-    <link href="//netdna.bootstrapcdn.com/bootswatch/3.1.1/superhero/bootstrap.min.css" rel="stylesheet" type=text/css />
-    <link href="/static/css/angularize.css" rel="stylesheet" type=text/css />
+    <link type="text/css" href="//netdna.bootstrapcdn.com/bootswatch/3.1.1/superhero/bootstrap.min.css" rel="stylesheet" />
     <!--<link href="/static/icomoon/icomoon.css" rel="stylesheet" type=text/css />-->
     <!--<link rel="shortcut icon" type="image/png" href="/static/img/favicon.ico"/>-->
     <!--<link rel="shortcut icon" type="image/png" href="http://angularfy.herokuapp.com/static/img/favicon.ico"/>-->
 
     <!-- Le scripts -->
-    <!--<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>-->
-    <!--<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-route.js"></script>-->  
-    <!--<script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.11.0.js"></script>--> 
-    <script src="/static/js/underscore-min.js"></script>
-    <script src="/static/js/underscore.string.min.js"></script>
+    <!-- The AngularJS bones -->
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-route.js"></script>
+
+    <!-- Lets use ng-grid from AngularUI -->
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/ng-grid/2.0.11/ng-grid.min.js"></script>
+    <link href="//cdnjs.cloudflare.com/ajax/libs/ng-grid/2.0.11/ng-grid.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- Lets use AngularUI Bootstrap -->
+    <script type="text/javascript" src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.11.0.js"></script>
+
+    <!-- Underscore is so helpful -->
+    <script type="text/javascript" src="/static/js/underscore-min.js"></script>
+    <script type="text/javascript" src="/static/js/underscore.string.min.js"></script>
     <script type="text/javascript"> _.mixin(_.str.exports()) </script>
-    <script src="/static/js/angularfy.js"></script>
+
+    <!-- Custom -->
+    <script type="text/javascript" src="/static/js/angularize.js"></script>
+    <link type="text/css" href="/static/css/angularize.css" rel="stylesheet" />
+
   </head>
   
-  <body>
+  <body ng-controller="MyCtrl">
+
+    <div class="container">
+      <div class="row clearfix">
+        <div class="col-md-12 column">
+          <div class="page-header">
+            <h1>
+              Real-time Charting Example <small>My Metacloud Coding Assignment</small>
+            </h1>
+          </div>
+        </div>
+      </div>
+      <div class="row clearfix">
+        <div class="col-md-3 column">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">
+                Side Panel
+              </h3>
+            </div>
+            <div class="panel-body">
+              Side Panel
+            </div>
+          </div>
+        </div>
+        <div class="col-md-9 column">
+          <div class="gridStyle" ng-grid="gridOptions"></div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
 
 
 
+{% endverbatim %}

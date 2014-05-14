@@ -1,0 +1,26 @@
+/*style.css
+  background-color: #485563;
+  background-color: #4E5D6C;
+*/
+.gridStyle {
+    width: auto; 
+    height: 300px;
+}
+
+.ngGrid {
+  background: none;
+}
+
+.ngRow.odd, 
+.ngTopPanel {
+  background-color: #2B3E50;
+}
+
+.ngVerticalBar {
+  display: none;
+}
+
+.ngRow.even {
+  background-color: #4E5D6C;
+}
+
