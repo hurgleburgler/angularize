@@ -9,6 +9,10 @@
   padding-left: 15px;
 }
 
+.panel-body {
+  height: 430px;
+}
+
 /* ngGrid styles */
 /*.gridStyle {
     width: auto; 

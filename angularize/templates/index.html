@@ -77,14 +77,15 @@
               </tr>
             </thead> 
             <tbody>
-              <tr class="table-row data-{{$index}}" ng-init="isActive = false" ng-repeat="host in $data" ng-class="{'active': isActive}">
-                <td ng-if="host.dummy != true" data-title=""><span class="icon toggle-chart" ng-class="{'icon-chevron-right': !isActive, 'icon-chevron-down': isActive}" ng-click="isActive = !isActive; showChart($event, $data, $index, isActive)"></span></td>
+              <tr class="table-row data-{{$index}}" ng-init="notActive = false" ng-repeat="host in $data" ng-class="{'active': notActive}">
+                <td ng-if="host.dummy != true" data-title=""><span class="icon toggle-chart" ng-class="{'icon-chevron-right': !notActive, 'icon-chevron-down': notActive}" ng-click="notActive = !notActive; showChart($event, $data, $index, notActive)"></span></td>
                 <td ng-if="host.dummy != true && col.hidden != true" ng-repeat="col in columns" data-title="{{col.displayName}}">
                   <span ng-class="{'text-success': host[col.field] == 'Good', 'text-warning': host[col.field] == 'Degraded', 'text-danger': host[col.field] == 'Bad'}">{{host[col.field]}}</span>
                 </td>
                 <td colspan="{{columns.length + 1}}" ng-if="host.dummy">
                   <rickshaw-chart
-                    data="data.status_data[$index - 1]"
+                    data="data.status_data"
+                    index="$index",
                     color="steelblue"
                     renderer="area"
                     width="835"
