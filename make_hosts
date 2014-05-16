@@ -1,0 +1,15 @@
+from angularize.models import Host
+
+my_host = Host(name='host1', ip='1.2.3.4', status='Good', state='Running').save()
+my_host = Host(name='host2', ip='1.2.3.5', status='Good', state='Running').save()
+my_host = Host(name='host3', ip='1.2.3.6', status='Degraded', state='Running').save()
+my_host = Host(name='host4', ip='1.2.3.7', status='Good', state='Running').save()
+my_host = Host(name='host5', ip='1.2.3.8', status='Bad', state='Stopped').save()
+my_host = Host(name='host6', ip='1.2.3.9', status='Good', state='Running').save()
+my_host = Host(name='host7', ip='1.2.3.10', status='Degraded', state='Running').save()
+my_host = Host(name='host8', ip='1.2.3.11', status='Good', state='Running').save()
+my_host = Host(name='host9', ip='1.2.3.12', status='Bad', state='Stopped').save()
+my_host = Host(name='host10', ip='1.2.3.13', status='Good', state='Running').save()
+my_host = Host(name='host11', ip='1.2.3.14', status='Degraded', state='Running').save()
+my_host = Host(name='host12', ip='1.2.3.15', status='Good', state='Running').save()
+my_host = Host(name='host13', ip='1.2.3.16', status='Good', state='Running').save()
