@@ -139,14 +139,6 @@ app.controller('MyCtrl', function($scope, $http, $interval, $resource, $timeout,
 
     $scope.getData(data, ndx);
     $scope.data.chart_data = data;
-    //var myIntervalFunction = function() {
-    //  getMoreData = $timeout(function myFunction() {
-    //    // do something
-    //    $scope.getData(data, ndx);
-    //    getMoreData = $timeout(myFunction, $scope.timer * 1000);
-    //  }, $scope.timer * 1000);
-    //}();
-    //myIntervalFunction();
   };
 
   $scope.updateCharts = function() {
