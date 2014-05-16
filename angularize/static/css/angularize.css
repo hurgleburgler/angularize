@@ -2,7 +2,15 @@
   background-color: #485563;
   background-color: #4E5D6C;
 */
-.gridStyle {
+/* General */
+.subtitle {
+  font-size: 45%;
+  font-weight: lighter;
+  padding-left: 15px;
+}
+
+/* ngGrid styles */
+/*.gridStyle {
     width: auto; 
     height: 300px;
 }
@@ -23,4 +31,58 @@
 .ngRow.even {
   background-color: #4E5D6C;
 }
+*/
 
+.ng-table th {
+  text-align: left;
+
+}
+
+.toggle-chart {
+  padding: 4px 0 0 8px;
+  display: inline-block;
+  width: 11px;
+}
+
+tr.active {
+  height: 300px;
+}
+
+.ng-table-pager {
+  text-align: center;
+}
+
+/* Rickshaw Chart */
+.rickshaw_graph .detail .item.active {
+  background-color: #4E5D6C;
+  border: none;
+}
+
+.rickshaw_graph .detail .item.left:after {
+  border-right-color: #4E5D6C;
+}
+
+.rickshaw_graph .detail .x_label {
+  background: none;
+  border: medium none;
+  opacity: 1;
+  padding: 0;
+}
+.rickshaw_graph .detail .x_label .label {
+  padding: 4px;
+  font-size: 100%;
+}
+
+.rickshaw_graph .detail .x_label .label,
+.rickshaw_graph .detail .item.active {
+  padding: 4px 6px;
+}
+
+.rickshaw_graph .detail {
+  background: none repeat scroll 0 0 rgba(223,105,26, 0.4);
+}
+
+td.rickshaw-cell,
+td.rickshaw-cell .rickshaw_graph {
+  width: 100%;
+}
