@@ -12,55 +12,62 @@ app.directive('rickshawChart', function () {
     template: '<div></div>',
     restrict: 'E',
     link: function postLink(scope, element, attrs) {
+      scope.graph = {};
       scope.$watch('data', function() {
+        scope.my_data = [{data: scope.data[scope.index - 1], name: attrs.chartName, color: attrs.color}];
         if(!scope.data[scope.index - 1]) {
           return;
         }
-        element[0].innerHTML ='';
 
-        var graph = new Rickshaw.Graph({
-          element: element[0],
-          width: attrs.width,
-          height: attrs.height,
-          series: [{data: scope.data[scope.index - 1], color: attrs.color}],
-          renderer: scope.renderer
-   	  //onComplete: function(transport) {
-   	  //  var graph = transport.graph;
-   	  //  var detail = new Rickshaw.Graph.HoverDetail({ 
-   	  //    graph: graph,
-   	  //    xFormatter: function(x) { 
-          //      return '<span class="label label-default">' + new Date(x) + '</span>';
-   	  //    },
-   	  //    yFormatter: function(y) {
-          //      return parseInt(y);
-          //    }
-   	  //  });
-          //  //var yAxis = new Rickshaw.Graph.Axis.Y({
-          //  //    graph: graph,
-          //  //    tickFormat: function(y) { return (y).toFixed()}
-          //  //});
-          //  //yAxis.render();
-          //}
-        });
+        if (_.isEmpty(scope.graph)) {
+          element[0].innerHTML ='';
+          scope.graph = new Rickshaw.Graph({
+            element: element[0],
+            width: attrs.width,
+            height: attrs.height,
+            series: new Rickshaw.Series.FixedDuration([{
+              name: attrs.chartName, color: attrs.color 
+            }], undefined, {
+              timeInterval: 5,
+              maxDataPoints: 20,
+              timeBase: new Date().getTime()
+            }),
+            renderer: scope.renderer
+          });
 
-        graph.render();
-      }, true);
-      scope.$watchCollection('[renderer]', function(newVal, oldVal){
-        if(!newVal[0]){
-          return;
+   	  var detail = new Rickshaw.Graph.HoverDetail({ 
+   	    graph: scope.graph,
+   	    xFormatter: function(x) { 
+              return '<span class="label label-default">' + new Date(x).toUTCString() + '</span>';
+   	    },
+   	    yFormatter: function(y) {
+              return parseInt(y, 10);
+            }
+   	  });
+        } else {
+
+          var data = {};
+          data[attrs.chartName] = scope.my_data[0].data[scope.my_data[0].data.length - 1].y;
+          scope.graph.series.addData(data);
         }
-        element[0].innerHTML ='';
-
-        var graph = new Rickshaw.Graph({
-          element: element[0],
-          width: attrs.width,
-          height: attrs.height,
-          series: [{data: scope.data[scope.index - 1], color: attrs.color}],
-          renderer: $scope.renderer
-        });
-
-        graph.render();
-      });
+        scope.graph.render();
+      }, true);
+//      scope.$watchCollection('[renderer]', function(newVal, oldVal){
+//        if(!newVal[0]){
+//          return;
+//        }
+//        element[0].innerHTML ='';
+//
+//        scope.graph = new Rickshaw.Graph({
+//          element: element[0],
+//          width: attrs.width,
+//          height: attrs.height,
+//          series: [{data: scope.data[scope.index - 1], color: attrs.color}],
+//          renderer: $scope.renderer
+//        });
+//console.log(scope.graph);
+//        scope.graph.render();
+//      });
     }
   };
 });
@@ -77,7 +84,6 @@ app.controller('MyCtrl', function($scope, $http, $interval, $resource, $timeout,
     { field: 'state', displayName: 'State' }
   ];
 
-  $scope.name = 'Real Time Status';
   $scope.data = {}
   $scope.data.status_data = [];
   $scope.data.chart_data = [];
