@@ -26,7 +26,7 @@
     <!-- Lets use rickshaw -->
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script type="text/javascript" src="/static/js/d3.min.js"></script>
-    <script type="text/javascript" src="/static/js/rickshaw.js"></script>
+    <script type="text/javascript" src="/static/js/rickshaw.min.js"></script>
     <link type="text/css" href="/static/css/rickshaw.min.css" rel="stylesheet" />
 
     <!-- Lets use AngularUI Bootstrap -->
@@ -60,11 +60,24 @@
           <div class="panel panel-default">
             <div class="panel-heading">
               <h3 class="panel-title">
-                My Side Panel
+               Chart Configuration Options 
               </h3>
             </div>
             <div class="panel-body">
-              Some content here...
+<form id="side_panel">
+  <section>
+    <div id="chart-type" class="toggler">
+      <input ng-model="chart_type" id="area" type="radio" checked="" value="area" name="renderer">
+      <label for="area">area</label>
+      <input ng-model="chart_type" id="bar" type="radio" value="bar" name="renderer">
+      <label for="bar">bar</label>
+      <input ng-model="chart_type" id="line" type="radio" value="line" name="renderer">
+      <label for="line">line</label>
+      <input ng-model="chart_type" id="scatter" type="radio" value="scatterplot" name="renderer">
+      <label for="scatter">scatter</label>
+    </div>
+  </section>
+</form>
             </div>
           </div>
         </div>
@@ -82,13 +95,13 @@
                 <td ng-if="host.dummy != true && col.hidden != true" ng-repeat="col in columns" data-title="{{col.displayName}}">
                   <span ng-class="{'text-success': host[col.field] == 'Good', 'text-warning': host[col.field] == 'Degraded', 'text-danger': host[col.field] == 'Bad'}">{{host[col.field]}}</span>
                 </td>
-                <td colspan="{{columns.length + 1}}" ng-if="host.dummy">
+                <td class="dummy-row" colspan="{{columns.length + 1}}" ng-if="host.dummy">
                   <rickshaw-chart
-                    data="data.status_data",
-                    chart-name="Real Time Status",
-                    index="$index",
+                    data="data.status_data"
+                    chart-name="Real Time Status"
+                    index="$index"
                     color="steelblue"
-                    renderer="line"
+                    renderer="chart_type"
                     width="835"
                     height="300">
                   </rickshaw-chart>

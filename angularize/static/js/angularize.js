@@ -12,52 +12,53 @@ app.directive('rickshawChart', function () {
     template: '<div></div>',
     restrict: 'E',
     link: function postLink(scope, element, attrs) {
+      scope.graph = {};
       scope.$watch('data', function() {
+        scope.my_data = [{data: scope.data[scope.index - 1], name: attrs.chartName, color: attrs.color}];
         if(!scope.data[scope.index - 1]) {
           return;
         }
-if(scope.data[0].length < 3) {
-console.log(scope.data[0].length);
-        element[0].innerHTML ='';
-        var graph = new Rickshaw.Graph({
-          element: element[0],
-          width: attrs.width,
-          height: attrs.height,
-          series: [{data: scope.data[scope.index - 1], name: attrs.chartName, color: attrs.color}],
-          renderer: scope.renderer
-        });
+        if (_.isEmpty(scope.graph)) {
+          element[0].innerHTML ='';
+          scope.graph = new Rickshaw.Graph({
+            element: element[0],
+            width: attrs.width,
+            height: attrs.height,
+            series: new Rickshaw.Series([{
+              name: attrs.chartName, color: attrs.color 
+            }], undefined, {
+              timeInterval: 5000,
+              maxDataPoints: 20,
+              timeBase: new Date().getTime()
+            }),
+            renderer: scope.renderer
+          });
 
-        if (scope.data[scope.index - 1].length > 1) {
    	  var detail = new Rickshaw.Graph.HoverDetail({ 
-   	    graph: graph,
-   	    xFormatter: function(x) { 
-              return '<span class="label label-default">' + new Date(x).toUTCString() + '</span>';
+   	    graph: scope.graph,
+   	    xFormatter: function(x) {
+              return '<span class="label label-default">' + new Date(x * 1000).toUTCString() + '</span>';
    	    },
    	    yFormatter: function(y) {
               return parseInt(y, 10);
             }
    	  });
+        } else {
+          var data = {};
+          data[attrs.chartName] = scope.my_data[0].data[scope.my_data[0].data.length - 1].y;
+          scope.graph.series.addData(data);
         }
-
-        graph.render();
-}
+        scope.graph.render();
       }, true);
-      //scope.$watchCollection('[renderer]', function(newVal, oldVal){
-      //  if(!newVal[0]){
-      //    return;
-      //  }
-      //  element[0].innerHTML ='';
-
-      //  var graph = new Rickshaw.Graph({
-      //    element: element[0],
-      //    width: attrs.width,
-      //    height: attrs.height,
-      //    series: [{data: scope.data[scope.index - 1], color: attrs.color}],
-      //    renderer: $scope.renderer
-      //  });
-
-      //  graph.render();
-      //});
+      scope.$watchCollection('[renderer]', function(newVal, oldVal){
+        if(!newVal[0] || _.isEmpty(scope.graph)){
+          return;
+        }
+        scope.graph.configure({
+          renderer: scope.renderer
+        });
+        scope.graph.render();
+      });
     }
   };
 });
@@ -79,6 +80,7 @@ app.controller('MyCtrl', function($scope, $http, $interval, $resource, $timeout,
   $scope.data.chart_data = [];
   $scope.timer = 5;
   $scope.history = 20;
+  $scope.chart_type = 'line';
 
   $scope.tableParams = new ngTableParams({
     page: 1,
