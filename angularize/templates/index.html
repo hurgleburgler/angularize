@@ -64,20 +64,33 @@
               </h3>
             </div>
             <div class="panel-body">
-<form id="side_panel">
-  <section>
-    <div id="chart-type" class="toggler">
-      <input ng-model="chart_type" id="area" type="radio" checked="" value="area" name="renderer">
-      <label for="area">area</label>
-      <input ng-model="chart_type" id="bar" type="radio" value="bar" name="renderer">
-      <label for="bar">bar</label>
-      <input ng-model="chart_type" id="line" type="radio" value="line" name="renderer">
-      <label for="line">line</label>
-      <input ng-model="chart_type" id="scatter" type="radio" value="scatterplot" name="renderer">
-      <label for="scatter">scatter</label>
-    </div>
-  </section>
-</form>
+              <form id="side-panel">
+                <section>
+                  <label>Chart Type:</label>
+                  <div id="chart-type" class="toggler">
+                    <input ng-model="chart_type" id="area" type="radio" checked="" value="area" name="renderer">
+                    <label for="area">area</label>
+                    <input ng-model="chart_type" id="bar" type="radio" value="bar" name="renderer">
+                    <label for="bar">bar</label>
+                    <input ng-model="chart_type" id="line" type="radio" value="line" name="renderer">
+                    <label for="line">line</label>
+                    <input ng-model="chart_type" id="scatter" type="radio" value="scatterplot" name="renderer">
+                    <label for="scatter">scatter</label>
+                  </div>
+                </section>
+                <section>
+                  <div id="chart-interval-input">
+                    <label for="chart-interval">Update Interval: </label>
+                    <input class="form-control" ng-model="interval" min=".5" max="100" step=".5" id="chart-interval" type="number" checked="" value="chart-interval" name="interval">
+                  </div>
+                </section>
+                <section>
+                  <div id="chart-history-input">
+                    <label for="chart-history">History Window: </label>
+                    <input class="form-control" ng-model="history" min="10" max="100" step="5" id="chart-history" type="number" checked="" value="chart-history" name="history">
+                  </div>
+                </section>
+              </form>
             </div>
           </div>
         </div>
@@ -102,6 +115,8 @@
                     index="$index"
                     color="steelblue"
                     renderer="chart_type"
+                    interval="interval"
+                    history ="history"
                     width="835"
                     height="300">
                   </rickshaw-chart>

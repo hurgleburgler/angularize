@@ -7,6 +7,8 @@ app.directive('rickshawChart', function () {
     scope: {
       data: '=',
       renderer: '=',
+      interval: '=',
+      history: '=',
       index: '='
     },
     template: '<div></div>',
@@ -20,23 +22,28 @@ app.directive('rickshawChart', function () {
         }
         if (_.isEmpty(scope.graph)) {
           element[0].innerHTML ='';
+          scope.series = new Rickshaw.Series.FixedDuration([{
+              name: attrs.chartName, color: attrs.color 
+            }], undefined, {
+              timeInterval: scope.interval * 1000,
+              maxDataPoints: scope.history,
+              timeBase: new Date().getTime() / 1000
+            });
+
           scope.graph = new Rickshaw.Graph({
             element: element[0],
             width: attrs.width,
             height: attrs.height,
-            series: new Rickshaw.Series([{
-              name: attrs.chartName, color: attrs.color 
-            }], undefined, {
-              timeInterval: 5000,
-              maxDataPoints: 20,
-              timeBase: new Date().getTime()
-            }),
-            renderer: scope.renderer
+            series: scope.series,
+            renderer: scope.renderer,
+            padding: {
+              top: 0.1
+            }
           });
 
    	  var detail = new Rickshaw.Graph.HoverDetail({ 
    	    graph: scope.graph,
-   	    xFormatter: function(x) {
+   	    xFormatter: function(x, y) {
               return '<span class="label label-default">' + new Date(x * 1000).toUTCString() + '</span>';
    	    },
    	    yFormatter: function(y) {
@@ -50,12 +57,29 @@ app.directive('rickshawChart', function () {
         }
         scope.graph.render();
       }, true);
-      scope.$watchCollection('[renderer]', function(newVal, oldVal){
+
+      scope.$watchCollection('[history]', function() {
+        if ('series' in scope) {
+          scope.series.maxDataPoints = scope.history;
+        }
+      });
+
+      scope.$watchCollection('[interval]', function() {
+        if ('series' in scope) {
+          scope.series.setTimeInterval(scope.interval * 1000);
+          scope.series.setTimeBase(new Date().getTime() / 1000);
+        }
+      });
+
+      scope.$watchCollection('[renderer]', function(newVal) {
         if(!newVal[0] || _.isEmpty(scope.graph)){
           return;
         }
         scope.graph.configure({
-          renderer: scope.renderer
+          renderer: scope.renderer,
+          padding: {
+            top: 0.1
+          }
         });
         scope.graph.render();
       });
@@ -78,8 +102,8 @@ app.controller('MyCtrl', function($scope, $http, $interval, $resource, $timeout,
   $scope.data = {}
   $scope.data.status_data = [];
   $scope.data.chart_data = [];
-  $scope.timer = 5;
   $scope.history = 20;
+  $scope.interval = 1;
   $scope.chart_type = 'line';
 
   $scope.tableParams = new ngTableParams({
@@ -140,15 +164,18 @@ app.controller('MyCtrl', function($scope, $http, $interval, $resource, $timeout,
   };
 
   $scope.updateCharts = function() {
-    load = $interval(function() {
-    for (var ii = 0; ii < $scope.data.chart_data.length; ii++) {
-      if ('dummy' in $scope.data.chart_data[ii]) {
-        $scope.getData($scope.data.chart_data, ii - 1);
+    return $interval(function() {
+      for (var ii = 0; ii < $scope.data.chart_data.length; ii++) {
+        if ('dummy' in $scope.data.chart_data[ii]) {
+          $scope.getData($scope.data.chart_data, ii - 1);
+        }
       }
-    }
 
-    }, $scope.timer * 1000);
+      }, $scope.interval * 1000);
   };
 
-  $scope.updateCharts();
+  $scope.$watch('interval', function() {
+    $interval.cancel($scope.updating);
+    $scope.updating = $scope.updateCharts();
+  });
 });

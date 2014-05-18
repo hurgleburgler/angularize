@@ -108,12 +108,14 @@ td.rickshaw-cell .rickshaw_graph {
   position: absolute;
   width: 33px;
 }
-
-input[type="radio"], input[type="checkbox"] {
+#side-panel section {
+  padding-bottom: 15px;
+}
+.toggler input[type="radio"], input[type="checkbox"] {
   line-height: normal;
   margin: 7px 0 0 3px;
 }
-form label {
+.toggler label {
   background-repeat: no-repeat;
   cursor: pointer;
   display: inline-block;
@@ -124,15 +126,15 @@ form label {
   height: 26px;
   margin: 4px 4px 0 0;
 }
-label[for="area"] {
+.toggler label[for="area"] {
   background: url("/static/img/rickshaw/om_stack.png") repeat scroll 0 0 rgba(0, 0, 0, 0);
 }
-label[for="line"] {
+.toggler label[for="line"] {
   background: url("/static/img/rickshaw/om_lines.png") repeat scroll 0 0 rgba(0, 0, 0, 0);
 }
-label[for="bar"] {
+.toggler label[for="bar"] {
   background: url("/static/img/rickshaw/om_bar.png") repeat scroll 0 0 rgba(0, 0, 0, 0);
 }
-label[for="scatter"] {
+.toggler label[for="scatter"] {
   background: url("/static/img/rickshaw/om_scatter.png") repeat scroll 0 0 rgba(0, 0, 0, 0);
 }
