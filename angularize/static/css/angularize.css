@@ -52,9 +52,6 @@
 tr.active {
   height: 300px;
 }
-td.dummy-row {
-  height: 400px;
-}
 
 .ng-table-pager {
   text-align: center;
