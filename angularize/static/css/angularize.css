@@ -62,17 +62,21 @@ tr.active {
 }
 
 /* Rickshaw Chart */
+.rickshaw_graph {
+  position: absolute;
+}
+.rickshaw_graph .detail {
+  background: none repeat scroll 0 0 rgba(223, 105, 26, 0.3);
+}
 .rickshaw_graph .detail .item.active {
   background-color: #4E5D6C;
   border: none;
 }
-
 .rickshaw_graph .detail .item.right:after, 
 .rickshaw_graph .detail .item.left:after {
   border-left-color: #4E5D6C;
   border-right-color: #4E5D6C;
 }
-
 .rickshaw_graph .detail .x_label {
   background: none;
   border: medium none;
@@ -83,30 +87,27 @@ tr.active {
   padding: 4px;
   font-size: 100%;
 }
-
 .rickshaw_graph .detail .x_label .label,
 .rickshaw_graph .detail .item.active {
   padding: 4px 6px;
 }
-
-.rickshaw_graph .detail {
-  margin-top: 10px;
-}
-
 td.rickshaw-cell,
 td.rickshaw-cell .rickshaw_graph {
   width: 100%;
 }
-
-/* Chart graph options */
-/* Adapted from http://code.shutterstock.com/rickshaw/examples/extensions.html */
 #hosts .toggle-chart-cell {
   width: 40px;
+}
+#hosts .dummy-row {
+  height: 315px;
 }
 #hosts .ng-table-pager,
 #chart-type {
   text-align: center;
 }
+
+/* Chart graph options */
+/* Adapted from http://code.shutterstock.com/rickshaw/examples/extensions.html */
 #chart-type input[type="radio"]:checked {
   outline: 2px solid #4682B4;
 }

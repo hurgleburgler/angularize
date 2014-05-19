@@ -27,6 +27,7 @@ app.directive('rickshawChart', function () {
             }], undefined, {
               timeInterval: scope.interval * 1000,
               maxDataPoints: scope.history,
+              // TODO: Pull this from the data
               timeBase: new Date().getTime() / 1000
             });
 
@@ -67,6 +68,8 @@ app.directive('rickshawChart', function () {
       scope.$watchCollection('[interval]', function() {
         if ('series' in scope) {
           scope.series.setTimeInterval(scope.interval * 1000);
+
+          // TODO: Pull this from the data
           scope.series.setTimeBase(new Date().getTime() / 1000);
         }
       });
