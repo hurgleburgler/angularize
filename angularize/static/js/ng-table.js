@@ -547,7 +547,7 @@ app.directive('ngTable', ['$compile', '$q', '$parse',
                 if (!row) {
                     return;
                 }
-                angular.forEach(row.find('td'), function (item) {
+                angular.forEach(row.find('th'), function (item) {
                     var el = angular.element(item);
                     if (el.attr('ignore-cell') && 'true' === el.attr('ignore-cell')) {
                         return;
@@ -646,7 +646,7 @@ app.directive('ngTable', ['$compile', '$q', '$parse',
                                     .attr({
                                         'ng-table-pagination': 'params',
                                         'template-url': 'templates.pagination',
-                                        'colspan': columns.length
+                                        'colspan': 6 
                                     })),
                             paginationTemplate = angular.element(document.createElement('tfoot')).append(paginationRow);
 

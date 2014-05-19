@@ -53,8 +53,12 @@ tr.active {
   height: 300px;
 }
 
-.ng-table-pager {
+#host-container [ng-include="templates.pagination"] > div {
   text-align: center;
+}
+
+#host-container .btn-group.pull-right {
+  display: none;
 }
 
 /* Rickshaw Chart */
@@ -96,6 +100,10 @@ td.rickshaw-cell .rickshaw_graph {
 
 /* Chart graph options */
 /* Adapted from http://code.shutterstock.com/rickshaw/examples/extensions.html */
+#hosts .toggle-chart-cell {
+  width: 40px;
+}
+#hosts .ng-table-pager,
 #chart-type {
   text-align: center;
 }
